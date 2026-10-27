@@ -168,7 +168,20 @@ Seed content includes:
 
 The seed operation is repeat-safe: it avoids duplicating seeded events, speakers, schedule days, and sponsors. Event IDs are created by MongoDB, so event links and registrations use database records.
 
-Sponsor names and `.example` websites are illustrative demo content, not real companies or confirmed endorsements. Event and highlight photos use Unsplash URLs, so displaying those photos requires internet access. Cards retain their visual styling when an image fails to load; sponsor logos use monogram fallbacks.
+### 🖼️ Image sources and what a GitHub clone will show
+
+The photo imagery used by the welcome page, home-page hero and spotlight, event cards, speaker portraits, gallery, About page, sign-in feature panel, and festival highlights is loaded from absolute `https://images.unsplash.com/...` URLs in the source code or seeded data. These are online URLs rather than local image files, so a clone uses the same sources without needing to copy image files separately. The client `public` folder contains SVG icons, not a local photo library.
+
+The 16 distinct Unsplash photo IDs currently referenced by the project were checked and returned HTTP 200 during the latest audit. A visitor who clones the repository should therefore see those photos when they run the app with internet access and the relevant page data is available. This depends on access to Unsplash and the continued availability of its service and URLs; remote hosting cannot be guaranteed permanently. A brief timeout or network restriction can also prevent a photo from loading.
+
+Fallback behavior varies by section:
+
+- **Event cards:** if a photo fails, the image is hidden so the card's colored artwork remains visible.
+- **Festival highlights:** if a photo fails, the image is hidden and the card's gradient and text remain.
+- **Sponsors and partners:** the seeded listings are illustrative demo content, not confirmed sponsors; their logos are generated monograms, not Unsplash photos. A monogram is also shown if a configured logo image fails.
+- **Welcome, home hero/spotlight, gallery, speaker portraits, About, and sign-in feature panel:** these use remote photos, but do not all currently define an explicit image-error fallback. They may show an empty image area if the remote request fails.
+
+The API-backed speaker and festival content is populated by the backend seeder. For all API-provided content to appear on a fresh setup, start MongoDB and the backend as described above; the frontend's local fallback data covers festival highlights and sponsors, but not every API-backed section. Registration and event data also require the database and backend to be running.
 
 ## 🧭 Application pages
 
@@ -236,6 +249,18 @@ node --check seedData.js
 There is not currently an automated backend test suite. For a basic local API check, with MongoDB and the backend running, visit <http://localhost:5000/> and check that `/api/events`, `/api/schedule`, `/api/speakers`, `/api/festival-info`, and `/api/sponsors` return JSON successfully.
 
 Build and syntax checks do not test every user flow. Database-backed actions require MongoDB to be running. Password recovery additionally requires valid SMTP settings.
+
+### Latest local verification
+
+The following checks were performed against the local development setup:
+
+- Client production build and lint completed successfully; backend and model JavaScript syntax checks passed.
+- The frontend entry point and the `/signin`, `/events`, and `/sponsors` routes returned successfully. The Sponsors page was inspected after signing in with a temporary QA account: all six sample sponsor cards rendered, the disclaimer was absent, and the grid displayed one column on mobile, two on tablet, and three on desktop.
+- The API returned 13 events, 3 schedule days containing 14 sessions, 4 speakers, 4 festival stats, 4 highlights, and 6 sponsors. These are counts from the local database at test time and can change.
+- Signup, login, event registration, and activity lookup were exercised successfully. Unauthenticated event creation returned HTTP 401; deletion by a different signed-in user returned HTTP 403; deletion by the event creator succeeded.
+- Password-reset request and invalid-token behavior were checked. Real password-reset email delivery was **not** tested.
+
+Temporary test accounts and the test registration used for these checks were deleted afterward. These local checks are not a substitute for an automated test suite or for testing against a production deployment.
 
 ## ✉️ Optional email configuration
 

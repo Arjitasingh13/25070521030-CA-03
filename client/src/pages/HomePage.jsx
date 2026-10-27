@@ -67,7 +67,7 @@ export default function HomePage() {
 
       <section className="moments-section">
         <div className="section-pad moments-inner"><div className="section-heading"><div><p className="eyebrow"><span />03 / THE PEOPLE MAKE THE FESTIVAL</p><h2>Festival<br />highlights.</h2></div><Link to="/gallery" className="button button-outline">See past highlights <ArrowUpRight size={16} /></Link></div>
-          <div className="moments-grid">{(festivalInfo?.highlights || fallbackHighlights).map((highlight) => <article className="moment-highlight" key={highlight.title}><img src={highlight.image} alt={highlight.title} loading="lazy" onError={(event) => { event.currentTarget.style.visibility = 'hidden'; }} /><span>{highlight.label}</span><div className="moment-highlight-copy"><h3>{highlight.title}</h3><p>{highlight.description}</p></div></article>)}</div>
+          <div className="moments-grid">{(festivalInfo?.highlights || fallbackHighlights).map((highlight) => <article className="moment-highlight" key={highlight.title}><img src={highlight.image} alt={highlight.title} loading="lazy" onError={(event) => { event.currentTarget.style.visibility = 'hidden'; }} /><div className="moment-highlight-overlay"><span>{highlight.label}</span><div className="moment-highlight-copy"><h3>{highlight.title}</h3><p>{highlight.description}</p></div></div></article>)}</div>
         </div>
       </section>
 
