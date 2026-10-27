@@ -1,0 +1,15 @@
+export { default as HomePage } from './pages/HomePage.jsx';
+export { default as EventsPage } from './pages/EventsPage.jsx';
+export { default as EventDetailsPage } from './pages/EventDetailsPage.jsx';
+export { default as LoginPage } from './pages/LoginPage.jsx';
+export { default as SignupPage } from './pages/SignupPage.jsx';
+export { default as RegisterEventPage } from './pages/RegisterEventPage.jsx';
+export { default as AddEventPage } from './pages/AddEventPage.jsx';
+export { default as ManageEventsPage } from './pages/ManageEventsPage.jsx';
+export { default as SponsorsPage } from './pages/SponsorsPage.jsx';
+export { default as GalleryPage } from './pages/GalleryPage.jsx';
+export { default as ContactPage } from './pages/ContactPage.jsx';
+export { default as SchedulePage } from './pages/SchedulePage.jsx';
+export { default as AboutPage } from './pages/AboutPage.jsx';
+export { default as SpeakersPage } from './pages/SpeakersPage.jsx';
+export { default as FaqPage } from './pages/FaqPage.jsx';
